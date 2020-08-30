@@ -2,6 +2,9 @@ name: Elixir CI
 
 on: push
 
+env:
+  MIX_ENV: test
+
 jobs:
   build:
     name: Build and test
@@ -15,7 +18,7 @@ jobs:
         env:
           POSTGRES_USER: yak
           POSTGRES_HOST_AUTH_METHOD: trust
-
+    
     steps:
       - uses: actions/checkout@v2
       - name: Set up Elixir
