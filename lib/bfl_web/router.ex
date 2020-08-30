@@ -23,12 +23,14 @@ defmodule BflWeb.Router do
   end
 
   scope "/auth", BflWeb do
-    pipe_through([:browser])
+    pipe_through :browser
 
-    get("/:provider", AuthController, :request)
-    get("/:provider/callback", AuthController, :callback)
-    post("/:provider/callback", AuthController, :callback)
-    post("/logout", AuthController, :delete)
+    live "/", AuthLive, :index
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/:provider/callback", AuthController, :callback
+    post "/logout", AuthController, :delete
   end
 
   # Other scopes may use custom stacks.
