@@ -1,4 +1,4 @@
-# Bfl
+# BFL ![CI](https://github.com/EugeneYak/BFL/workflows/Elixir%20CI/badge.svg)
 
 To start your Phoenix server:
 
