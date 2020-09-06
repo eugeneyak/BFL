@@ -15,8 +15,14 @@ defmodule Bfl.Cache.Manager do
 
   @impl true
   def init(_) do
+    {:ok, %{}, {:continue, :trap}}
+  end
+
+  @impl true
+  def handle_continue(:trap, state) do
     Process.flag(:trap_exit, true)
-    {:ok, %{}}
+
+    {:noreply, state}
   end
 
   @impl true
