@@ -4,7 +4,7 @@
 
 <ul>
 
-  <%= for bm <- @results do %>
+  <%= for {bm, _rate} <- @results do %>
     <li><%= bm.title %></li>
   <% end %>
 

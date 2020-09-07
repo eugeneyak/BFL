@@ -1,26 +1,20 @@
 defmodule BflWeb.PageLive do
   use BflWeb, :live_view
 
+  alias Bfl.Registry.Lookup
+
   @impl true
   def mount(_params, _session, socket) do
     query = ""
-    {:ok, socket |> assign(query: query, results: results("me", query))}
+    {:ok, socket |> assign(query: query, results: Lookup.rate(query, cache("me")))}
   end
 
   @impl true
   def handle_event("search", %{"q" => query}, socket) do
-    {:noreply, socket |> assign(results: results("me", query))}
+    {:noreply, socket |> assign(results: Lookup.rate(query, cache("me")))}
   end
 
-  defp results(user, ""), do: data(user)
-
-  defp results(user, query) do
-    user
-    |> data()
-    |> Enum.filter(&String.starts_with?(&1.title, query))
-  end
-
-  defp data(user) do
+  def cache(user) do
     Bfl.Cache.Manager.fetch(user, Bfl.Registry.list_bookmarks())
   end
 end
