@@ -8,6 +8,5 @@ defmodule Bfl.Repo.Migrations.CreateBookmarks do
 
       timestamps()
     end
-
   end
 end

@@ -14,9 +14,11 @@ defmodule Bfl.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Bfl.PubSub},
       # Start the Endpoint (http/https)
-      BflWeb.Endpoint
+      BflWeb.Endpoint,
       # Start a worker by calling: Bfl.Worker.start_link(arg)
       # {Bfl.Worker, arg}
+
+      Bfl.Cache.Manager
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
