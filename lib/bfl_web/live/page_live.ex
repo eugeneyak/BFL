@@ -5,13 +5,12 @@ defmodule BflWeb.PageLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    query = ""
-    {:ok, socket |> assign(query: query, results: Lookup.rate(query, cache("me")))}
+    {:ok, socket |> assign(results: Lookup.filter("", cache("me")))}
   end
 
   @impl true
   def handle_event("search", %{"q" => query}, socket) do
-    {:noreply, socket |> assign(results: Lookup.rate(query, cache("me")))}
+    {:noreply, socket |> assign(results: Lookup.filter(query, cache("me")))}
   end
 
   def cache(user) do

@@ -1,7 +1,7 @@
 defmodule Bfl.Registry.Lookup do
-  def rate("", list), do: list |> Enum.map(&{&1, 1})
+  def filter("", list), do: list |> Enum.map(&{&1, 1})
 
-  def rate(query, list) do
+  def filter(query, list) do
     list
     |> Enum.map(&{&1, distance(query, &1.title)})
     |> Enum.sort_by(fn {_, rate} -> -rate end)
