@@ -13,6 +13,12 @@ defmodule BflWeb.PageLive do
     {:noreply, socket |> assign(results: Lookup.filter(query, cache("me")))}
   end
 
+  @impl true
+  def handle_event("commit", _, socket) do
+    IO.inspect("REDIRECT")
+    {:noreply, socket}
+  end
+
   def cache(user) do
     Bfl.Cache.Manager.fetch(user, Bfl.Registry.list_bookmarks())
   end
