@@ -10,7 +10,8 @@ defmodule Bfl.Registry.Lookup do
 
   def distance(query, candidate) do
     candidate
+    |> String.downcase()
     |> String.slice(0, String.length(query))
-    |> String.bag_distance(query)
+    |> String.bag_distance(String.downcase(query))
   end
 end
