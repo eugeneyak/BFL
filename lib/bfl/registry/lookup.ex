@@ -1,14 +1,36 @@
 defmodule Bfl.Registry.Lookup do
-  def filter("", list), do: list |> Enum.map(&{&1, 1})
+  def filter(collections, ""), do: collections
 
-  def filter(query, list) do
-    list
-    |> Enum.map(&{&1, distance(query, &1.title)})
-    |> Enum.sort_by(fn {_, rate} -> -rate end)
-    |> Enum.take_while(fn {_, rate} -> rate >= 0.5 end)
+  def filter(collections, query) do
+    collections
+    |> filter_by_distance(query)
+    |> filter_by_count()
   end
 
-  def distance(query, candidate) do
+  defp filter_by_distance(collections, query) do
+    Enum.map(collections, fn collection ->
+      fits =
+        collection
+        |> Map.get(:bookmarks)
+        |> Enum.filter(fn bookmark ->
+          bookmark
+          |> Map.get(:title)
+          |> distance(query) >= 0.5
+        end)
+
+      Map.put(collection, :bookmarks, fits)
+    end)
+  end
+
+  defp filter_by_count(collections) do
+    Enum.filter(collections, fn collection ->
+      collection
+      |> Map.get(:bookmarks)
+      |> Enum.count() > 0
+    end)
+  end
+
+  defp distance(candidate, query) do
     candidate
     |> String.downcase()
     |> String.slice(0, String.length(query))

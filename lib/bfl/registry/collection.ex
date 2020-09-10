@@ -3,6 +3,8 @@ defmodule Bfl.Registry.Collection do
   import Ecto.Changeset
 
   schema "collections" do
+    has_many :bookmarks, Bfl.Registry.Bookmark
+
     field :title, :string
     field :user_id, :integer
 

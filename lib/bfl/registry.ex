@@ -114,7 +114,11 @@ defmodule Bfl.Registry do
 
   """
   def list_collections do
-    Repo.all(Collection)
+    Repo.all(
+      from collections in Collection,
+        join: bookmarks in assoc(collections, :bookmarks),
+        preload: [bookmarks: bookmarks]
+    )
   end
 
   @doc """

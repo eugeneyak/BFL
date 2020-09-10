@@ -2,10 +2,13 @@
   <input name="q" />
 </form>
 
-<ul>
+<%= for collection <- @results do %>
+  <div>
+    <%= collection.title %>:
 
-  <%= for {bm, _rate} <- @results do %>
-    <li><%= bm.title %></li>
-  <% end %>
+    <%= for bookmark <- collection.bookmarks do %>
+      <div><%= bookmark.title %></div>
+    <% end %>
 
-</ul>
+  </div>
+<% end %>
