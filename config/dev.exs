@@ -2,7 +2,7 @@ use Mix.Config
 
 # Configure your database
 config :bfl, Bfl.Repo,
-  username: "yak",
+  username: "postgres",
   database: "bfl_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
