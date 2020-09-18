@@ -1,16 +1,17 @@
 defmodule BflWeb.PageLive do
   use BflWeb, :live_view
 
+  alias Bfl.Manager
   alias Bfl.Registry.{Lookup, Collection, Bookmark}
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket |> assign(results: Lookup.filter(cache("me"), ""))}
+    {:ok, socket |> assign(results: Lookup.filter(Manager.fetch("me"), ""))}
   end
 
   @impl true
   def handle_event("search", %{"q" => query}, socket) do
-    {:noreply, socket |> assign(results: Lookup.filter(cache("me"), query))}
+    {:noreply, socket |> assign(results: Lookup.filter(Manager.fetch("me"), query))}
   end
 
   @impl true
@@ -25,9 +26,5 @@ defmodule BflWeb.PageLive do
       _ ->
         {:noreply, socket}
     end
-  end
-
-  defp cache(user) do
-    Bfl.Cache.Manager.fetch(user, Bfl.Registry.list_collections())
   end
 end

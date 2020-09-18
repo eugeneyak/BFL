@@ -18,7 +18,7 @@ defmodule Bfl.Application do
       # Start a worker by calling: Bfl.Worker.start_link(arg)
       # {Bfl.Worker, arg}
 
-      Bfl.Cache.Manager
+      Bfl.Manager
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
