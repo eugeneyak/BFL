@@ -28,11 +28,11 @@ defmodule BflWeb.AuthController do
   end
 
   def callback(%{assigns: %{ueberauth_auth: %{info: info, provider: provider}}} = conn, _params) do
-    case Accounts.create_oauth(provider, info) do
-      {:ok, _oauth} ->
+    case Accounts.create_user(info) do
+      {:ok, user} ->
         conn
         |> put_flash(:info, "Successfully authenticated via #{provider}")
-        |> put_session(:current_user, 1)
+        |> put_session(:current_user, user)
         |> configure_session(renew: true)
         |> redirect(to: "/")
 

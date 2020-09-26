@@ -12,12 +12,16 @@ defmodule BflWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :secure do
+    plug BflWeb.Plugs.Authenticated
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", BflWeb do
-    pipe_through :browser
+    pipe_through [:browser, :secure]
 
     live "/", PageLive, :index
   end

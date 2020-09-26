@@ -6,16 +6,11 @@ defmodule Bfl.Accounts do
   import Ecto.Query, warn: false
 
   alias Bfl.Repo
-  alias Bfl.Accounts.OAuth
+  alias Bfl.Accounts.User
 
-  @spec create_oauth(atom, Ueberauth.Auth.Info.t()) :: any
-  def create_oauth(provider, attrs = %Ueberauth.Auth.Info{}) do
-    %OAuth{provider: Atom.to_string(provider)}
-    |> OAuth.changeset(Map.from_struct(attrs))
-    |> Repo.insert(on_conflict: :nothing, returning: true)
-  end
-
-  def delete_oauth(%OAuth{} = oauth) do
-    Repo.delete(oauth)
+  def create_user(%Ueberauth.Auth.Info{email: email, name: name, urls: %{avatar_url: avatar}}) do
+    %User{}
+    |> User.changeset(%{email: email, name: name, avatar: avatar})
+    |> Repo.insert(on_conflict: :replace_all, conflict_target: :email, returning: true)
   end
 end

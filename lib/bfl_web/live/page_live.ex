@@ -5,7 +5,7 @@ defmodule BflWeb.PageLive do
   alias Bfl.Registry.{Lookup, Collection, Bookmark}
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, %{"current_user" => user}, socket) do
     {:ok, socket |> assign(results: Lookup.filter(Manager.fetch("me"), ""))}
   end
 
