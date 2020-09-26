@@ -6,12 +6,12 @@ defmodule BflWeb.PageLive do
 
   @impl true
   def mount(_params, %{"current_user" => user}, socket) do
-    {:ok, socket |> assign(results: Lookup.filter(Manager.fetch(user), ""))}
+    {:ok, socket |> assign(user: user, results: lookup(user))}
   end
 
   @impl true
   def handle_event("search", %{"q" => query}, socket) do
-    {:noreply, socket |> assign(results: Lookup.filter(Manager.fetch("me"), query))}
+    {:noreply, socket |> assign(results: lookup(socket.assigns.user, query))}
   end
 
   @impl true
@@ -27,4 +27,7 @@ defmodule BflWeb.PageLive do
         {:noreply, socket}
     end
   end
+
+  defp lookup(user), do: Lookup.filter(Manager.fetch(user), "")
+  defp lookup(user, query), do: Lookup.filter(Manager.fetch(user), query)
 end
