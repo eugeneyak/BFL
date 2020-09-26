@@ -121,6 +121,14 @@ defmodule Bfl.Registry do
     )
   end
 
+  def list_collections(%Bfl.Accounts.User{} = user) do
+    Repo.all(
+      from collections in Ecto.assoc(user, :collections),
+        join: bookmarks in assoc(collections, :bookmarks),
+        preload: [bookmarks: bookmarks]
+    )
+  end
+
   @doc """
   Gets a single collection.
 

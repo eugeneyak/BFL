@@ -6,7 +6,7 @@ defmodule BflWeb.PageLive do
 
   @impl true
   def mount(_params, %{"current_user" => user}, socket) do
-    {:ok, socket |> assign(results: Lookup.filter(Manager.fetch("me"), ""))}
+    {:ok, socket |> assign(results: Lookup.filter(Manager.fetch(user), ""))}
   end
 
   @impl true

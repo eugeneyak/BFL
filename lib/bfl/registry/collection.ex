@@ -3,10 +3,11 @@ defmodule Bfl.Registry.Collection do
   import Ecto.Changeset
 
   schema "collections" do
-    has_many :bookmarks, Bfl.Registry.Bookmark
+    belongs_to :user, Bfl.Accounts.User
+
+    has_many :bookmarks, Bfl.Registry.Bookmark, on_delete: :delete_all
 
     field :title, :string
-    field :user_id, :integer
 
     timestamps()
   end

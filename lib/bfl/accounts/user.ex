@@ -2,8 +2,9 @@ defmodule Bfl.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key false
   schema "users" do
+    has_many :collections, Bfl.Registry.Collection, on_delete: :delete_all
+
     field :email, :string, primary_key: true
 
     field :name, :string
