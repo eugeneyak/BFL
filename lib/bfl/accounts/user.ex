@@ -5,7 +5,7 @@ defmodule Bfl.Accounts.User do
   schema "users" do
     has_many :collections, Bfl.Registry.Collection, on_delete: :delete_all
 
-    field :email, :string, primary_key: true
+    field :email, :string
 
     field :name, :string
     field :avatar, :string
