@@ -5,7 +5,7 @@ defmodule BflWeb.AuthLive do
   def render(assigns) do
     ~L"""
     <div>
-      <button phx-click="authorize" phx-value-provider="github">GitHub</button>
+      <button phx-click="authorize" phx-value-provider="github">Authorize via GitHub</button>
     </div>
     """
   end

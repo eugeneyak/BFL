@@ -1,14 +1,44 @@
-<form phx-change="search" phx-submit="commit">
-  <input name="q" />
-</form>
+<main class="page page--bookmarks">
+  <section class="collection__header">
+    <form phx-change="search" phx-submit="commit">
+      <input name="q" />
+    </form>
+  </section>
 
-<%= for collection <- @results do %>
-  <div>
-    <%= collection.title %>:
+  <section class="collections">
+    <%= for collection <- @results do %>
+      <article class="collection">
+        <header class="collection__header">
+          <p class="collection__title">
+            <%= collection.title %>
+          </p>
 
-    <%= for bookmark <- collection.bookmarks do %>
-      <div><%= bookmark.title %></div>
+          <button class="delete-btn" alt="Delete collection">
+            <i class="delete-btn__icon"></i>
+            <div class="delete-btn__background"></div>
+          </button>
+        </header>
+
+        <main class="bookmarks">
+          <%= for bookmark <- collection.bookmarks do %>
+            <div class="bookmark">
+              <p class="bookmark__title">
+                <%= bookmark.title %>
+              </p>
+
+              <a class="bookmark__link" href="<%= bookmark.url %>" target="_blank">
+                <%= bookmark.url %>
+              </a>
+
+              <button class="delete-btn" alt="Delete bookmark">
+                <i class="delete-btn__icon"></i>
+                <div class="delete-btn__background"></div>
+              </button>
+            </div>
+          <% end %>
+        </main>
+
+      </article>
     <% end %>
-
-  </div>
-<% end %>
+  </section>
+</main>
