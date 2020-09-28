@@ -10,10 +10,17 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Rubik', Arial, sans-serif;
-    font-size: 16px;
     font-weight: 300;
-    color: #fff;
-    background-color: rgb(10, 21, 48);
+    color: #21375A;
+    background-color: #f5f7f9;
+
+    @media (min-width: 992.01px) {
+        font-size: 16px;
+    }
+
+    @media (max-width: 992px) {
+        font-size: 12px;
+    }
 }
 
 a {
@@ -34,27 +41,135 @@ button:focus {
 
 .container {
     margin: 0 auto;
-    max-width: 80vw;
-    padding: var(--container-padding);
     position: relative;
-    width: 100%
+    width: 100%;
+
+    @media (min-width: 1920.01px) {
+        max-width: 1920px;
+        padding: 0 40px;
+    }
+
+    @media (max-width: 1920px) and (min-width: 1280.01px) {
+        max-width: 80vw;
+        padding: 0 20px;
+    }
+
+    @media (max-width: 1280px) {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+}
+
+.page {
+
+    &__header {
+        background-color: #fff;
+        box-shadow: 0 1px 2px 0 rgba(10, 21, 48, .05);
+
+        @media (min-width: 1920.01px) {
+            padding: 40px 0 8px;
+        }
+    
+        @media (max-width: 1920px) and (min-width: 1280.01px) {
+            padding: 20px 0 4px;
+        }
+    
+        @media (max-width: 1280px) {
+            padding: 10px 0 4px;
+        }
+    }
+
+    &__content {
+        @media (min-width: 1920.01px) {
+            padding: 52px 0;
+        }
+    
+        @media (max-width: 1920px) and (min-width: 1280.01px) {
+            padding: 36px 0;
+        }
+    
+        @media (max-width: 1280px) {
+            padding: 20px 0;
+        }
+    }
+}
+
+.search-form {
+
+    &__label {
+        display: block;
+        position: relative;
+    }
+
+    &__field {
+        width: 100%;
+        padding: .5em 1rem .5em 0;
+        border: none;
+        border-bottom: 1px solid #c9cfdd;
+        font-family: 'Rubik', Arial, sans-serif;
+        font-size: 2rem;
+        font-weight: 300;
+    }
+
+    &__label-text {
+        position: absolute;
+        left: 0;
+        bottom: 1rem;
+        margin: 0;
+        font-size: 2rem;
+        opacity: .5;
+        transition: .1s ease;
+        transition-property: top, bottom, font-size, opacity;
+
+        &--field-in-focus {
+            top: 0;
+            bottom: auto;
+            font-size: 1rem;
+            opacity: 1;
+        }
+    }
 }
 
 .collections {
+    display: grid;
 
+    @media (min-width: 1920.01px) {
+        grid-template-columns: repeat(4, 1fr);
+        grid-column-gap: 40px;
+        grid-row-gap: 40px;
+    }
+
+    @media (max-width: 1920px) and (min-width: 1366.01px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 1920px) and (min-width: 992.01px) {
+        grid-column-gap: 24px;
+        grid-row-gap: 24px;
+    }
+
+    @media (max-width: 1366px) and (min-width: 992.01px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 992px) {
+        grid-template-columns: 1fr;
+        grid-column-gap: 16px;
+        grid-row-gap: 16px;
+    }
 }
 
 .collection {
-    border: 1px solid rgb(65, 83, 119);
     border-radius: .25rem;
-    background-color: rgb(32, 48, 83);
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 rgba(10, 21, 48, .05);
 
     &__header {
-
+        border-bottom: 1px solid #c9cfdd;
     }
 
     &__title {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         font-weight: 500;
     }
 }
@@ -64,6 +179,11 @@ button:focus {
 }
 
 .bookmark {
+    border-bottom: 1px solid #c9cfdd;
+
+    &:last-child {
+        border-bottom: none;
+    }
 
     &__title {
 
