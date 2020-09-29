@@ -16,15 +16,11 @@ defmodule BflWeb.PageLive do
 
   @impl true
   def handle_event("commit", _, socket) do
-    case socket.assigns.results do
-      [%Collection{bookmarks: bookmarks} | _] ->
-        case bookmarks do
-          [%Bookmark{url: url} | _] -> {:noreply, socket |> redirect(external: url)}
-          _ -> {:noreply, socket}
-        end
-
-      _ ->
-        {:noreply, socket}
+    with %Collection{bookmarks: bookmarks} <- List.first(socket.assigns.results),
+         %Bookmark{url: url} <- List.first(bookmarks) do
+      {:noreply, socket |> redirect(external: url)}
+    else
+      nil -> {:noreply, socket}
     end
   end
 
