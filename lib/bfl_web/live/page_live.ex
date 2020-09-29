@@ -2,6 +2,7 @@ defmodule BflWeb.PageLive do
   use BflWeb, :live_view
 
   alias Bfl.Manager
+  alias Bfl.Registry
   alias Bfl.Registry.{Lookup, Collection, Bookmark}
 
   @impl true
@@ -17,7 +18,8 @@ defmodule BflWeb.PageLive do
   @impl true
   def handle_event("commit", _, socket) do
     with %Collection{bookmarks: bookmarks} <- List.first(socket.assigns.results),
-         %Bookmark{url: url} <- List.first(bookmarks) do
+         %Bookmark{url: url} = bookmark <- List.first(bookmarks) do
+      Registry.create_redirect_for(bookmark)
       {:noreply, socket |> redirect(external: url)}
     else
       nil -> {:noreply, socket}

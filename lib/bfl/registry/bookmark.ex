@@ -5,6 +5,8 @@ defmodule Bfl.Registry.Bookmark do
   schema "bookmarks" do
     belongs_to :collection, Bfl.Registry.Collection
 
+    has_many :redirects, Bfl.Registry.Redirect, on_delete: :delete_all
+
     field :title, :string
     field :url, :string
 

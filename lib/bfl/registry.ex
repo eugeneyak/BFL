@@ -209,4 +209,38 @@ defmodule Bfl.Registry do
   def change_collection(%Collection{} = collection, attrs \\ %{}) do
     Collection.changeset(collection, attrs)
   end
+
+  alias Bfl.Registry.Redirect
+
+  @doc """
+  Returns the list of redirects.
+
+  ## Examples
+
+      iex> list_redirects()
+      [%Redirect{}, ...]
+
+  """
+  def list_redirects do
+    Repo.all(Redirect)
+  end
+
+  @doc """
+  Creates a redirect.
+
+  ## Examples
+
+      iex> create_redirect(%{field: value})
+      {:ok, %Redirect{}}
+
+      iex> create_redirect(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+
+  def create_redirect_for(%Bookmark{} = bookmark) do
+    bookmark
+    |> Ecto.build_assoc(:redirects, %{interaction: "enter"})
+    |> Repo.insert()
+  end
 end

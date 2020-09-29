@@ -124,4 +124,61 @@ defmodule Bfl.RegistryTest do
       assert %Ecto.Changeset{} = Registry.change_collection(collection)
     end
   end
+
+  describe "redirects" do
+    alias Bfl.Registry.Redirect
+
+    @valid_attrs %{}
+    @update_attrs %{}
+    @invalid_attrs %{}
+
+    def redirect_fixture(attrs \\ %{}) do
+      {:ok, redirect} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Registry.create_redirect()
+
+      redirect
+    end
+
+    test "list_redirects/0 returns all redirects" do
+      redirect = redirect_fixture()
+      assert Registry.list_redirects() == [redirect]
+    end
+
+    test "get_redirect!/1 returns the redirect with given id" do
+      redirect = redirect_fixture()
+      assert Registry.get_redirect!(redirect.id) == redirect
+    end
+
+    test "create_redirect/1 with valid data creates a redirect" do
+      assert {:ok, %Redirect{} = redirect} = Registry.create_redirect(@valid_attrs)
+    end
+
+    test "create_redirect/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Registry.create_redirect(@invalid_attrs)
+    end
+
+    test "update_redirect/2 with valid data updates the redirect" do
+      redirect = redirect_fixture()
+      assert {:ok, %Redirect{} = redirect} = Registry.update_redirect(redirect, @update_attrs)
+    end
+
+    test "update_redirect/2 with invalid data returns error changeset" do
+      redirect = redirect_fixture()
+      assert {:error, %Ecto.Changeset{}} = Registry.update_redirect(redirect, @invalid_attrs)
+      assert redirect == Registry.get_redirect!(redirect.id)
+    end
+
+    test "delete_redirect/1 deletes the redirect" do
+      redirect = redirect_fixture()
+      assert {:ok, %Redirect{}} = Registry.delete_redirect(redirect)
+      assert_raise Ecto.NoResultsError, fn -> Registry.get_redirect!(redirect.id) end
+    end
+
+    test "change_redirect/1 returns a redirect changeset" do
+      redirect = redirect_fixture()
+      assert %Ecto.Changeset{} = Registry.change_redirect(redirect)
+    end
+  end
 end
