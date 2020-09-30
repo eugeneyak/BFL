@@ -23,7 +23,7 @@ let hooks = {
   lul: {
     mounted() {
       const labelElem = this.el;
-      const inputElem = this.el.children[0]
+      const inputElem = this.el.children[0];
 
       const neededClass = "search-form__label--field-in-focus";
 
