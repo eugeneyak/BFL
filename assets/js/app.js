@@ -17,29 +17,30 @@ import { Socket } from "phoenix"
 import NProgress from "nprogress"
 import { LiveSocket } from "phoenix_live_view"
 
-let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
+const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
-let hooks = {
-  lul: {
+const hooks = {
+  search: {
     mounted() {
-      const labelElem = this.el;
-      const inputElem = this.el.children[0];
+      const labelElem = this.el
+      const inputElem = this.el.children[0]
 
-      const neededClass = "search-form__label--field-in-focus";
+      const neededClass = "search-form__label--field-in-focus"
 
-      const inputValue = () => inputElem.value;
-      const isInputNotEmpty = () => (inputValue() !== "" && inputValue() != null);
+      const inputValue = () => inputElem.value
 
-      const handleInput = () => isInputNotEmpty() ? labelElem.classList.add(neededClass) : labelElem.classList.remove(neededClass);
- 
-      inputElem.onkeydown = inputElem.onkeyup = inputElem.onkeypress = handleInput;
+      const isInputEmpty = () => (inputValue() === "" || inputValue() == null)
 
-      handleInput();
+      const handleInput = () => isInputEmpty()
+        ? labelElem.classList.remove(neededClass)
+        : labelElem.classList.add(neededClass)
+
+      inputElem.onkeydown = inputElem.onkeyup = inputElem.onkeypress = handleInput
     }
   }
 }
 
-let liveSocket = new LiveSocket("/live", Socket, {
+const liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
   hooks: hooks,
 })
