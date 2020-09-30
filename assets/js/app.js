@@ -21,32 +21,20 @@ let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("
 
 let hooks = {
   lul: {
-    // page() {
-    //   console.log(this.el.dataset.page);
-    //   return this.el.dataset.page
-    // },
-
     mounted() {
+      const labelElem = this.el;
       const inputElem = this.el.children[0]
-      const labelElem = this.el
-
-      console.log(inputElem);
-      console.log(labelElem);
 
       const neededClass = "search-form__label--field-in-focus";
 
       const inputValue = () => inputElem.value;
       const isInputNotEmpty = () => (inputValue() !== "" && inputValue() != null);
 
-      // const handleInput = () => isInputNotEmpty() ? labelElem.classList.add(neededClass) : labelElem.classList.remove(neededClass);
+      const handleInput = () => isInputNotEmpty() ? labelElem.classList.add(neededClass) : labelElem.classList.remove(neededClass);
+ 
+      inputElem.onkeydown = inputElem.onkeyup = inputElem.onkeypress = handleInput;
 
-      const handleInput = () => labelElem.classList.add(neededClass)
-
-      inputElem.onkeydown = handleInput;
-      inputElem.onkeyup = handleInput;
-      inputElem.onkeypress = handleInput;
-
-      // handleInput();
+      handleInput();
     }
   }
 }
