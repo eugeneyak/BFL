@@ -13,12 +13,48 @@ import "../css/app.scss"
 //     import socket from "./socket"
 //
 import "phoenix_html"
-import {Socket} from "phoenix"
+import { Socket } from "phoenix"
 import NProgress from "nprogress"
-import {LiveSocket} from "phoenix_live_view"
+import { LiveSocket } from "phoenix_live_view"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
+
+let hooks = {
+  lul: {
+    // page() {
+    //   console.log(this.el.dataset.page);
+    //   return this.el.dataset.page
+    // },
+
+    mounted() {
+      const inputElem = this.el.children[0]
+      const labelElem = this.el.children[1]
+
+      console.log(inputElem);
+      console.log(labelElem);
+
+      const neededClass = "search-form__label--field-in-focus";
+
+      const inputValue = () => inputElem.value;
+      const isInputNotEmpty = () => (inputValue() !== "" && inputValue() != null);
+
+      // const handleInput = () => isInputNotEmpty() ? labelElem.classList.add(neededClass) : labelElem.classList.remove(neededClass);
+
+      const handleInput = () => labelElem.classList.add(neededClass)
+
+      inputElem.onkeydown = handleInput;
+      inputElem.onkeyup = handleInput;
+      inputElem.onkeypress = handleInput;
+
+      // handleInput();
+    }
+  }
+}
+
+let liveSocket = new LiveSocket("/live", Socket, {
+  params: { _csrf_token: csrfToken },
+  hooks: hooks,
+})
 
 // Show progress bar on live navigation and form submits
 window.addEventListener("phx:page-loading-start", info => NProgress.start())
@@ -32,4 +68,3 @@ liveSocket.connect()
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
-
