@@ -28,7 +28,7 @@ let hooks = {
 
     mounted() {
       const inputElem = this.el.children[0]
-      const labelElem = this.el.children[1]
+      const labelElem = this.el
 
       console.log(inputElem);
       console.log(labelElem);
