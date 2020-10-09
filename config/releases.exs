@@ -2,7 +2,7 @@
 # from environment variables. You can also hardcode secrets,
 # although such is generally not recommended and you have to
 # remember to add this file to your .gitignore.
-use Mix.Config
+import Config
 
 config :bfl, Bfl.Repo,
   hostname: System.get_env("DBHOST") || raise("environment variable DBHOST is missing"),
@@ -21,10 +21,10 @@ config :bfl, BflWeb.Endpoint,
       You can generate one by calling: mix phx.gen.secret
       """)
 
-# config :ueberauth, Ueberauth.Strategy.Github.OAuth,
-#   client_id:
-#     System.get_env("UEBERAUTH_GITHUB_CLIENT_ID") ||
-#       raise("environment variable UEBERAUTH_GITHUB_CLIENT_ID is missing"),
-#   client_secret:
-#     System.get_env("UEBERAUTH_GITHUB_CLIENT_SECRET") ||
-#       raise("environment variable UEBERAUTH_GITHUB_CLIENT_SECRET is missing")
+config :ueberauth, Ueberauth.Strategy.Github.OAuth,
+  client_id:
+    System.get_env("UEBERAUTH_GITHUB_CLIENT_ID") ||
+      raise("environment variable UEBERAUTH_GITHUB_CLIENT_ID is missing"),
+  client_secret:
+    System.get_env("UEBERAUTH_GITHUB_CLIENT_SECRET") ||
+      raise("environment variable UEBERAUTH_GITHUB_CLIENT_SECRET is missing")
