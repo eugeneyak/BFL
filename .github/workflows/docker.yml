@@ -10,15 +10,6 @@ jobs:
     name: Build and push
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_USER: yak
-          POSTGRES_HOST_AUTH_METHOD: trust
-
     steps:
       - uses: actions/checkout@v2
       - name: Set up QEMU
