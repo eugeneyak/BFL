@@ -5,7 +5,13 @@
 import Config
 
 config :bfl, BflWeb.Endpoint,
-  url: [host: System.get_env("ORIGIN") || raise("environment variable ORIGIN is missing")]
+  url: [host: System.get_env("ORIGIN") || raise("environment variable ORIGIN is missing")],
+  secret_key_base:
+    System.get_env("SECRET_KEY_BASE") ||
+      raise("""
+      environment variable SECRET_KEY_BASE is missing.
+      You can generate one by calling: mix phx.gen.secret
+      """)
 
 config :bfl, Bfl.Repo,
   hostname: System.get_env("DBHOST") || raise("environment variable DBHOST is missing"),
@@ -15,14 +21,6 @@ config :bfl, Bfl.Repo,
   port: System.get_env("DBPORT") || 5432,
   show_sensitive_data_on_connection_error: true,
   pool_size: 3
-
-config :bfl, BflWeb.Endpoint,
-  secret_key_base:
-    System.get_env("SECRET_KEY_BASE") ||
-      raise("""
-      environment variable SECRET_KEY_BASE is missing.
-      You can generate one by calling: mix phx.gen.secret
-      """)
 
 config :ueberauth, Ueberauth.Strategy.Github.OAuth,
   client_id:
