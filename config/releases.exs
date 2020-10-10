@@ -4,28 +4,21 @@
 # remember to add this file to your .gitignore.
 import Config
 
+alias Bfl.Env
+
 config :bfl, BflWeb.Endpoint,
-  url: [host: System.get_env("ORIGIN") || raise("environment variable ORIGIN is missing")],
-  secret_key_base:
-    System.get_env("SECRET_KEY_BASE") ||
-      raise("""
-      environment variable SECRET_KEY_BASE is missing.
-      You can generate one by calling: mix phx.gen.secret
-      """)
+  url: [host: Env.get("ORIGIN")],
+  secret_key_base: Env.get("SECRET_KEY_BASE")
 
 config :bfl, Bfl.Repo,
-  hostname: System.get_env("DBHOST") || raise("environment variable DBHOST is missing"),
-  database: System.get_env("DBNAME") || "bfl",
-  username: System.get_env("DBUSER") || raise("environment variable DBUSER is missing"),
-  password: System.get_env("DBPASS") || raise("environment variable DBPASS is missing"),
-  port: System.get_env("DBPORT") || 5432,
+  hostname: Env.get("DB_HOST"),
+  database: Env.get("DB_NAME", "bfl"),
+  username: Env.get("DB_USER"),
+  password: Env.get("DB_PASS"),
+  port: Env.get("DB_PORT", 5432),
   show_sensitive_data_on_connection_error: true,
   pool_size: 3
 
 config :ueberauth, Ueberauth.Strategy.Github.OAuth,
-  client_id:
-    System.get_env("UEBERAUTH_GITHUB_CLIENT_ID") ||
-      raise("environment variable UEBERAUTH_GITHUB_CLIENT_ID is missing"),
-  client_secret:
-    System.get_env("UEBERAUTH_GITHUB_CLIENT_SECRET") ||
-      raise("environment variable UEBERAUTH_GITHUB_CLIENT_SECRET is missing")
+  client_id: Env.get("UEBERAUTH_GITHUB_CLIENT_ID"),
+  client_secret: Env.get("UEBERAUTH_GITHUB_CLIENT_SECRET"),
