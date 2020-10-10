@@ -4,21 +4,21 @@
 # remember to add this file to your .gitignore.
 import Config
 
-alias Bfl.Env
+alias Bfl.Release
 
 config :bfl, BflWeb.Endpoint,
-  url: [host: Env.get("ORIGIN")],
-  secret_key_base: Env.get("SECRET_KEY_BASE")
+  url: [host: Release.get_env("ORIGIN")],
+  secret_key_base: Release.get_env("SECRET_KEY_BASE")
 
 config :bfl, Bfl.Repo,
-  hostname: Env.get("DB_HOST"),
-  database: Env.get("DB_NAME", "bfl"),
-  username: Env.get("DB_USER"),
-  password: Env.get("DB_PASS"),
-  port: Env.get("DB_PORT", 5432),
+  hostname: Release.get_env("DB_HOST"),
+  database: Release.get_env("DB_NAME", "bfl"),
+  username: Release.get_env("DB_USER"),
+  password: Release.get_env("DB_PASS"),
+  port: Release.get_env("DB_PORT", 5432),
   show_sensitive_data_on_connection_error: true,
   pool_size: 3
 
 config :ueberauth, Ueberauth.Strategy.Github.OAuth,
-  client_id: Env.get("UEBERAUTH_GITHUB_CLIENT_ID"),
-  client_secret: Env.get("UEBERAUTH_GITHUB_CLIENT_SECRET")
+  client_id: Release.get_env("UEBERAUTH_GITHUB_CLIENT_ID"),
+  client_secret: Release.get_env("UEBERAUTH_GITHUB_CLIENT_SECRET")

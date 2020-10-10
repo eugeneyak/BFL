@@ -14,6 +14,14 @@ defmodule Bfl.Release do
     {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :down, to: version))
   end
 
+  def get_env(name) do
+    System.get_env(name) || raise "environment variable #{name} is missing"
+  end
+
+  def get_env(name, default) do
+    System.get_env(name) || default
+  end
+
   defp load_app do
     Application.load(@app)
   end
