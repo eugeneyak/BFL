@@ -4,6 +4,9 @@
 # remember to add this file to your .gitignore.
 import Config
 
+config :bfl, BflWeb.Endpoint,
+  url: [host: System.get_env("ORIGIN") || raise("environment variable ORIGIN is missing")],
+
 config :bfl, Bfl.Repo,
   hostname: System.get_env("DBHOST") || raise("environment variable DBHOST is missing"),
   database: System.get_env("DBNAME") || "bfl",
