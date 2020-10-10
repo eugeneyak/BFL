@@ -1,0 +1,113 @@
+:root {
+    --container-padding: 0 20px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Rubik', Arial, sans-serif;
+    font-weight: 300;
+    line-height: 1.4;
+    color: #21375A;
+    background-color: #f5f7f9;
+
+    @media (min-width: 992.01px) {
+        font-size: 16px;
+    }
+
+    @media (max-width: 992px) {
+        font-size: 12px;
+    }
+}
+
+input:focus,
+button:focus {
+    outline: none;
+}
+
+.container {
+    margin: 0 auto;
+    position: relative;
+    width: 100%;
+
+    @media (min-width: 1920.01px) {
+        max-width: 1920px;
+        padding: 0 40px;
+    }
+
+    @media (max-width: 1920px) and (min-width: 1280.01px) {
+        max-width: 80vw;
+        padding: 0 20px;
+    }
+
+    @media (max-width: 1280px) {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+}
+
+.page {
+    &__header {
+        background-color: #fff;
+        box-shadow: 0 1px 2px 0 rgba(10, 21, 48, .05);
+
+        @media (min-width: 1920.01px) {
+            padding: 40px 0 8px;
+        }
+
+        @media (max-width: 1920px) and (min-width: 1280.01px) {
+            padding: 20px 0 4px;
+        }
+
+        @media (max-width: 1280px) {
+            padding: 10px 0 4px;
+        }
+    }
+
+    &__content {
+        @media (min-width: 1920.01px) {
+            padding: 52px 0;
+        }
+
+        @media (max-width: 1920px) and (min-width: 1280.01px) {
+            padding: 36px 0;
+        }
+
+        @media (max-width: 1280px) {
+            padding: 20px 0;
+        }
+    }
+}
+
+.collections-grid {
+    display: grid;
+
+    @media (min-width: 1920.01px) {
+        grid-template-columns: repeat(4, minmax(300px, 600px));
+        grid-column-gap: 40px;
+        grid-row-gap: 40px;
+    }
+
+    @media (max-width: 1920px) and (min-width: 1366.01px) {
+        grid-template-columns: repeat(3, minmax(300px, 600px));
+    }
+
+    @media (max-width: 1920px) and (min-width: 992.01px) {
+        grid-column-gap: 24px;
+        grid-row-gap: 24px;
+    }
+
+    @media (max-width: 1366px) and (min-width: 992.01px) {
+        grid-template-columns: repeat(2, minmax(300px, 600px));
+    }
+
+    @media (max-width: 992px) {
+        grid-template-columns: 1fr;
+        grid-column-gap: 16px;
+        grid-row-gap: 16px;
+    }
+}

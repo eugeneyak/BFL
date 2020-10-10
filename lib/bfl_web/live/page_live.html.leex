@@ -1,14 +1,53 @@
-<form phx-change="search" phx-submit="commit">
-  <input name="q" />
-</form>
+<main class="page page--bookmarks">
+  <section class="page__header">
+    <div class="container">
+      <form class="search-form" phx-change="search" phx-submit="commit">
+        <label class="search-form__label" for="searchQuery" id="searchLabel" phx-hook="search">
+          <input class="search-form__field" name="q" id="searchQuery" />
+          <p class="search-form__label-text">Search</p>
+        </label>
+      </form>
+    </div>
+  </section>
 
-<%= for collection <- @results do %>
-  <div>
-    <%= collection.title %>:
+  <section class="page__content">
+    <div class="container">
+      <div class="collections-grid">
+        <%= for collection <- @results do %>
+          <article class="collection">
+            <header class="collection__header">
+              <span class="collection__title">
+                <%= collection.title %>
+              </span>
 
-    <%= for bookmark <- collection.bookmarks do %>
-      <div><%= bookmark.title %></div>
-    <% end %>
+              <button class="delete-btn" title="Delete collection">
+                <%= live_component @socket, BflWeb.DeleteIconComponent %>
+              </button>
+            </header>
 
-  </div>
-<% end %>
+            <main class="collection__bookmarks">
+              <%= for bookmark <- collection.bookmarks do %>
+                <div class="bookmark">
+                  <span class="bookmark__title">
+                    <%= bookmark.title %>
+                  </span>
+
+                  <span class="bookmark__link">
+                    <span class="bookmark__link-text">
+                      <%= bookmark.url %>
+                    </span>
+                  </span>
+
+                  <button class="delete-btn" title="Delete bookmark">
+                    <%= live_component @socket, BflWeb.DeleteIconComponent %>
+                  </button>
+                </div>
+              <% end %>
+            </main>
+
+          </article>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</main>
