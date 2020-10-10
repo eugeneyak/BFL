@@ -4,6 +4,6 @@ defmodule Bfl.Env do
   end
 
   def get(name, default) do
-    System.get_env(name, default)
+    System.get_env(name) || default
   end
 end
