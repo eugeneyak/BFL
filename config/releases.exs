@@ -5,7 +5,7 @@
 import Config
 
 config :bfl, BflWeb.Endpoint,
-  url: [host: System.get_env("ORIGIN") || raise("environment variable ORIGIN is missing")],
+  url: [host: System.get_env("ORIGIN") || raise("environment variable ORIGIN is missing")]
 
 config :bfl, Bfl.Repo,
   hostname: System.get_env("DBHOST") || raise("environment variable DBHOST is missing"),
