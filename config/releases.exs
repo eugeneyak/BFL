@@ -21,4 +21,4 @@ config :bfl, Bfl.Repo,
 
 config :ueberauth, Ueberauth.Strategy.Github.OAuth,
   client_id: Env.get("UEBERAUTH_GITHUB_CLIENT_ID"),
-  client_secret: Env.get("UEBERAUTH_GITHUB_CLIENT_SECRET"),
+  client_secret: Env.get("UEBERAUTH_GITHUB_CLIENT_SECRET")
