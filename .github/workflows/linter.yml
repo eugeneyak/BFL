@@ -1,0 +1,10 @@
+name: Lint
+on: pull_request
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check
+        uses: github/super-linter@v3.12.0
