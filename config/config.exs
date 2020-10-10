@@ -12,7 +12,8 @@ config :bfl,
 
 # Configures the endpoint
 config :bfl, BflWeb.Endpoint,
-  url: [host: "localhost"],
+  url: [host: "localhost", port: 4000],
+  http: [port: 4000],
   secret_key_base: "qSV1mzM9p7mAnitRlaI61Q2IytRMoXt/xD5nujQ2KgcqJesFSEAWbaMdflo2P6Jh",
   render_errors: [view: BflWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Bfl.PubSub,
