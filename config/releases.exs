@@ -7,18 +7,18 @@ import Config
 alias Bfl.Release
 
 config :bfl, BflWeb.Endpoint,
-  url: [host: Release.get_env("ORIGIN")],
-  secret_key_base: Release.get_env("SECRET_KEY_BASE")
+  url: [host: Release.load("ORIGIN")],
+  secret_key_base: Release.load("SECRET_KEY_BASE")
 
 config :bfl, Bfl.Repo,
-  hostname: Release.get_env("DB_HOST"),
-  database: Release.get_env("DB_NAME", "bfl"),
-  username: Release.get_env("DB_USER"),
-  password: Release.get_env("DB_PASS"),
-  port: Release.get_env("DB_PORT", 5432),
+  hostname: Release.load("DB_HOST"),
+  database: Release.load("DB_NAME", "bfl"),
+  username: Release.load("DB_USER"),
+  password: Release.load("DB_PASS"),
+  port: Release.load("DB_PORT", 5432),
   show_sensitive_data_on_connection_error: true,
   pool_size: 3
 
 config :ueberauth, Ueberauth.Strategy.Github.OAuth,
-  client_id: Release.get_env("UEBERAUTH_GITHUB_CLIENT_ID"),
-  client_secret: Release.get_env("UEBERAUTH_GITHUB_CLIENT_SECRET")
+  client_id: Release.load("UEBERAUTH_GITHUB_CLIENT_ID"),
+  client_secret: Release.load("UEBERAUTH_GITHUB_CLIENT_SECRET")
