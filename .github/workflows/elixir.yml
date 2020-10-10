@@ -1,4 +1,4 @@
-name: Elixir CI
+name: Test
 
 on: push
 
@@ -9,7 +9,7 @@ jobs:
   build:
     name: Build and test
     runs-on: ubuntu-latest
-    
+
     services:
       postgres:
         image: postgres
@@ -18,14 +18,15 @@ jobs:
         env:
           POSTGRES_USER: yak
           POSTGRES_HOST_AUTH_METHOD: trust
-    
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Set up Elixir
         uses: actions/setup-elixir@v1
         with:
-          elixir-version: '1.10.3' # Define the elixir version [required]
-          otp-version: '22.3' # Define the OTP version [required]
+          elixir-version: '1.10.3'
+          otp-version: '22.3'
       - name: Restore dependencies cache
         uses: actions/cache@v2
         with:

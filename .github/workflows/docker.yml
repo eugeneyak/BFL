@@ -1,6 +1,7 @@
-name: Docker
+name: Build and deploy
 
-on: push
+# on:
+#   push: [master]
 
 jobs:
   build:
@@ -20,8 +21,17 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Build and push
-        id: docker_build
         uses: docker/build-push-action@v2
         with:
           push: true
           tags: eugeneyak/bfl:latest
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: muinmomin/webhook-action@v1.0.0
+        with:
+          url: ${{ secrets.DEPLOY_WEBHOOK }}
+          data: "{'command': 'publish'}"
