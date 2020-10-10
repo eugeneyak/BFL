@@ -1,6 +1,6 @@
 name: Build and deploy
 
-# on:
+on: push
 #   push: [master]
 
 jobs:
