@@ -3,31 +3,25 @@ defmodule Bfl.AccountsTest do
 
   alias Bfl.Accounts
 
-  describe "oauth" do
-    alias Bfl.Accounts.OAuth
+  describe "user" do
+    alias Bfl.Accounts.User
 
-    @valid_attrs %Ueberauth.Auth.Info{email: "email@example.com"}
+    @valid_attrs %Ueberauth.Auth.Info{email: "email@example.com", name: "Name"}
     @invalid_attrs %Ueberauth.Auth.Info{email: nil}
 
-    def oauth_fixture(attrs \\ %{}) do
-      {:ok, oauth} = Accounts.create_oauth(:github, Enum.into(attrs, @valid_attrs))
-      oauth
+    def user_fixture do
+      {:ok, user} = Accounts.create_user(@valid_attrs)
+      IO.inspect(user)
+      user
     end
 
-    test "create_oauth/1 with valid data creates a o_auth" do
-      assert {:ok, %OAuth{} = oauth} = Accounts.create_oauth(:github, @valid_attrs)
-      assert oauth.email == "email@example.com"
-      assert oauth.provider == "github"
+    test "create_user/1 with valid data creates a o_auth" do
+      assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
+      assert user.email == "email@example.com"
     end
 
-    test "create_oauth/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_oauth(:github, @invalid_attrs)
-    end
-
-    @tag :skip
-    test "delete_o_auth/1 deletes the o_auth" do
-      o_auth = oauth_fixture()
-      assert {:ok, %OAuth{}} = Accounts.delete_oauth(o_auth)
+    test "create_user/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_user(@invalid_attrs)
     end
   end
 end
