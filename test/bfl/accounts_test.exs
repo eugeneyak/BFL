@@ -11,7 +11,6 @@ defmodule Bfl.AccountsTest do
 
     def user_fixture do
       {:ok, user} = Accounts.create_user(@valid_attrs)
-      IO.inspect(user)
       user
     end
 
