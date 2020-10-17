@@ -116,34 +116,20 @@ defmodule Bfl.Registry do
   def list_collections do
     Repo.all(
       from collections in Collection,
-        join: bookmarks in assoc(collections, :bookmarks),
-        preload: [bookmarks: bookmarks]
+        left_join: bookmarks in assoc(collections, :bookmarks),
+        preload: [bookmarks: bookmarks],
+        order_by: [collections.inserted_at, bookmarks.inserted_at]
     )
   end
 
   def list_collections(%Bfl.Accounts.User{} = user) do
     Repo.all(
       from collections in Ecto.assoc(user, :collections),
-        join: bookmarks in assoc(collections, :bookmarks),
-        preload: [bookmarks: bookmarks]
+        left_join: bookmarks in assoc(collections, :bookmarks),
+        preload: [bookmarks: bookmarks],
+        order_by: [collections.inserted_at, bookmarks.inserted_at]
     )
   end
-
-  @doc """
-  Gets a single collection.
-
-  Raises `Ecto.NoResultsError` if the Collection does not exist.
-
-  ## Examples
-
-      iex> get_collection!(123)
-      %Collection{}
-
-      iex> get_collection!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_collection!(id), do: Repo.get!(Collection, id)
 
   @doc """
   Creates a collection.
@@ -157,8 +143,8 @@ defmodule Bfl.Registry do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_collection(attrs \\ %{}) do
-    %Collection{}
+  def create_collection(attrs \\ %{}, user) do
+    %Collection{user_id: user.id}
     |> Collection.changeset(attrs)
     |> Repo.insert()
   end

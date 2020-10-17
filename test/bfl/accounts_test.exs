@@ -1,5 +1,5 @@
 defmodule Bfl.AccountsTest do
-  use Bfl.DataCase
+  use Bfl.DataCase, async: true
 
   alias Bfl.Accounts
 
@@ -8,11 +8,6 @@ defmodule Bfl.AccountsTest do
 
     @valid_attrs %Ueberauth.Auth.Info{email: "email@example.com", name: "Name"}
     @invalid_attrs %Ueberauth.Auth.Info{email: nil}
-
-    def user_fixture do
-      {:ok, user} = Accounts.create_user(@valid_attrs)
-      user
-    end
 
     test "create_user/1 with valid data creates a o_auth" do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
