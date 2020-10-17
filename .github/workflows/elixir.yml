@@ -16,7 +16,7 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRES_USER: yak
+          POSTGRES_USER: postgres
           POSTGRES_HOST_AUTH_METHOD: trust
 
     steps:
