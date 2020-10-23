@@ -37,6 +37,75 @@ const hooks = {
 
       inputElem.onkeydown = inputElem.onkeyup = inputElem.onkeypress = handleInput
     }
+  },
+
+  drag: {
+    mounted() {
+      this.el.setAttribute("draggable", "true");
+
+      this.el.ondragstart = event => {
+        console.log("START: ", this.el);
+
+
+        // const canvas = document.createElement('canvas');
+
+        // canvas.width = 100;
+        // canvas.height = 100;
+
+        // const ctx = canvas.getContext("2d");
+
+        // ctx.fillStyle = "green";
+        // ctx.fillRect(0, 0, 100, 100);
+
+        // event.dataTransfer.setDragImage(canvas, 25, 25);
+
+        event.dataTransfer.effectAllowed = "move";
+        // event.dataTransfer.setData('application/x-moz-node', this.el)
+        event.dataTransfer.setData('text/plain', this.el.id)
+      }
+
+      this.el.ondragover = event => {
+        event.preventDefault()
+        // console.log(this.el.clientHeight);
+        // console.log(event.layerY);
+
+        Array.from(document.getElementsByClassName("KEK"))
+          .forEach(element => element.style.backgroundColor = "blue");
+
+        const q = this.el.clientHeight / 2 - event.layerY > 0
+          ? this.el.previousElementSibling
+          : this.el.nextElementSibling
+
+        q.style.backgroundColor = "red"
+      }
+    }
+  },
+
+  drop: {
+    area() { return this.el.id || "droparea" },
+
+    mounted() {
+      console.log(this.el);
+
+      this.el.ondragover = event => {
+        event.preventDefault()
+        event.dataTransfer.dropEffect = "move";
+      }
+
+      this.el.ondrop = event => {
+        console.log('FINISH');
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        const data = event.dataTransfer.getData('text/plain');
+
+        console.log(data);
+
+        this.pushEvent("drop", { area: this.area(), id: data })
+
+      }
+    }
   }
 }
 

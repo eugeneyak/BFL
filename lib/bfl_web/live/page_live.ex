@@ -26,6 +26,20 @@ defmodule BflWeb.PageLive do
     end
   end
 
+  @impl true
+  def handle_event("drop", %{"area" => "delete", "id" => id}, socket) do
+    IO.inspect(id, label: "ID")
+    {:noreply, socket |> assign(results: [])}
+  end
+
+  @impl true
+  def handle_event("drop", %{"area" => "collection" <> id}, socket) do
+    IO.inspect("COLLECTION")
+    IO.inspect(id, label: "ID")
+
+    {:noreply, socket}
+  end
+
   defp lookup(user), do: Lookup.filter(Manager.fetch(user), "")
   defp lookup(user, query), do: Lookup.filter(Manager.fetch(user), query)
 end
