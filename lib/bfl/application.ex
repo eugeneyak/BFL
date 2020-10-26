@@ -6,6 +6,8 @@ defmodule Bfl.Application do
   use Application
 
   def start(_type, _args) do
+    Bfl.Release.migrate()
+
     children = [
       # Start the Ecto repository
       Bfl.Repo,
@@ -23,7 +25,11 @@ defmodule Bfl.Application do
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Bfl.Supervisor]
+    opts = [
+      name: Bfl.Supervisor,
+      strategy: :one_for_one
+    ]
+
     Supervisor.start_link(children, opts)
   end
 

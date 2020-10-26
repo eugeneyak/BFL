@@ -17,29 +17,84 @@ import { Socket } from "phoenix"
 import NProgress from "nprogress"
 import { LiveSocket } from "phoenix_live_view"
 
-let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
+const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
-let hooks = {
-  lul: {
+const hooks = {
+  search: {
     mounted() {
-      const labelElem = this.el;
-      const inputElem = this.el.children[0];
+      const labelElem = this.el
+      const inputElem = this.el.children[0]
 
-      const neededClass = "search-form__label--field-in-focus";
+      const neededClass = "search-form__label--field-in-focus"
 
-      const inputValue = () => inputElem.value;
-      const isInputNotEmpty = () => (inputValue() !== "" && inputValue() != null);
+      const inputValue = () => inputElem.value
 
-      const handleInput = () => isInputNotEmpty() ? labelElem.classList.add(neededClass) : labelElem.classList.remove(neededClass);
- 
-      inputElem.onkeydown = inputElem.onkeyup = inputElem.onkeypress = handleInput;
+      const isInputEmpty = () => (inputValue() === "" || inputValue() == null)
 
-      handleInput();
+      const handleInput = () => isInputEmpty()
+        ? labelElem.classList.remove(neededClass)
+        : labelElem.classList.add(neededClass)
+
+      inputElem.onkeydown = inputElem.onkeyup = inputElem.onkeypress = handleInput
+    }
+  },
+
+  drag: {
+    mounted() {
+      this.el.setAttribute("draggable", "true");
+
+      this.el.ondragstart = event => {
+        console.log("START: ", this.el);
+
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData('text/plain', this.el.id)
+      }
+
+      this.el.ondragover = event => {
+        event.preventDefault()
+
+        this.dropMargins()
+
+        if (this.el.clientHeight / 2 - event.layerY > 0) {
+          this.el.style.marginTop = '30px'
+        } else {
+          this.el.style.marginBottom = '30px'
+        }
+      }
+
+      this.el.ondragend = () => this.dropMargins()
+    },
+
+    dropMargins() {
+      Array.from(document.getElementsByClassName("bookmark"))
+        .forEach(element => element.style.margin = "0 0 0 0");
+    }
+  },
+
+  drop: {
+    area() { return this.el.id || "droparea" },
+
+    mounted() {
+      console.log(this.el);
+
+      this.el.ondrop = event => {
+        console.log('FINISH');
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        const data = event.dataTransfer.getData('text/plain');
+
+        console.log(data);
+
+        this.pushEvent("drop", { area: this.area(), id: data })
+
+      }
     }
   }
 }
 
-let liveSocket = new LiveSocket("/live", Socket, {
+const liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
   hooks: hooks,
 })

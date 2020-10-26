@@ -25,17 +25,16 @@
         flex: 0 0 auto;
         margin-right: .5em;
     }
-    
+
     &__link {
         margin-right: auto;
         cursor: pointer;
-    
+
         &:hover {
             .bookmark__link-text {
                 border-bottom-color: transparent;
             }
         }
-    
         &-text {
             word-break: break-all;
             font-size: .75rem;

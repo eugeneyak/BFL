@@ -2,7 +2,7 @@
   <section class="page__header">
     <div class="container">
       <form class="search-form" phx-change="search" phx-submit="commit">
-        <label class="search-form__label" for="searchQuery" id="searchLabel" phx-hook="lul">
+        <label class="search-form__label" for="searchQuery" id="searchLabel" phx-hook="search">
           <input class="search-form__field" name="q" id="searchQuery" />
           <p class="search-form__label-text">Search</p>
         </label>
@@ -10,11 +10,14 @@
     </div>
   </section>
 
+  <div phx-hook="drop" data-area="delete" style="height: 100px; background-color: maroon;">
+  </div>
+
   <section class="page__content">
     <div class="container">
       <div class="collections-grid">
         <%= for collection <- @results do %>
-          <article class="collection">
+          <article id="collection<%= collection.id %>" class="collection" phx-hook="drop" data-area="collection">
             <header class="collection__header">
               <span class="collection__title">
                 <%= collection.title %>
@@ -27,7 +30,7 @@
 
             <main class="collection__bookmarks">
               <%= for bookmark <- collection.bookmarks do %>
-                <div class="bookmark">
+                <div id="<%= bookmark.id %>" class="bookmark" phx-hook="drag">
                   <span class="bookmark__title">
                     <%= bookmark.title %>
                   </span>
@@ -38,9 +41,9 @@
                     </span>
                   </span>
 
-                  <button class="delete-btn" title="Delete bookmark">
+                  <i class="delete-btn" title="Delete bookmark" >
                     <%= live_component @socket, BflWeb.DeleteIconComponent %>
-                  </button>
+                  </i>
                 </div>
               <% end %>
             </main>
