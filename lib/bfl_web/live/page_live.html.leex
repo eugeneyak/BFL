@@ -1,4 +1,15 @@
 <main class="page page--bookmarks">
+  <aside class="sidebar">
+    <section class="sidebar__badges badges">
+      <div class="badge">stage</div>
+      <div class="badge">prod</div>
+    </section>
+    <section class="sidebar__action-areas action-areas">
+      <div class="action-area">Редактировать</div>
+      <div class="action-area">Удалить</div>
+    </section>
+  </aside>
+
   <section class="page__header">
     <div class="container">
       <form class="search-form" phx-change="search" phx-submit="commit">
@@ -10,8 +21,8 @@
     </div>
   </section>
 
-  <div phx-hook="drop" data-area="delete" style="height: 100px; background-color: maroon;">
-  </div>
+  <%# <div phx-hook="drop" data-area="delete" style="height: 100px; background-color: maroon;">
+  </div> %>
 
   <section class="page__content">
     <div class="container">
@@ -27,6 +38,10 @@
             <main class="collection__bookmarks">
               <%= for bookmark <- collection.bookmarks do %>
                 <div id="<%= bookmark.id %>" class="bookmark" phx-hook="drag">
+                  <span class="bookmark__icon">
+                    <img src="https://www.sentry.dev/_assets2/favicon.ico">
+                  </span>
+
                   <span class="bookmark__title">
                     <%= bookmark.title %>
                   </span>
@@ -35,6 +50,11 @@
                     <span class="bookmark__link-text">
                       <%= bookmark.url %>
                     </span>
+                  </span>
+
+                  <span class="bookmark__badges">
+                    <div class="badge">stage</div>
+                    <div class="badge">prod</div>
                   </span>
                 </div>
               <% end %>
