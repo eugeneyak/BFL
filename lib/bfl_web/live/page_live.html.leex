@@ -22,10 +22,6 @@
               <span class="collection__title">
                 <%= collection.title %>
               </span>
-
-              <button class="delete-btn" title="Delete collection">
-                <%= live_component @socket, BflWeb.DeleteIconComponent %>
-              </button>
             </header>
 
             <main class="collection__bookmarks">
@@ -40,10 +36,6 @@
                       <%= bookmark.url %>
                     </span>
                   </span>
-
-                  <i class="delete-btn" title="Delete bookmark" >
-                    <%= live_component @socket, BflWeb.DeleteIconComponent %>
-                  </i>
                 </div>
               <% end %>
             </main>

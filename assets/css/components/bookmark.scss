@@ -4,21 +4,13 @@
     align-items: flex-start;
     position: relative;
     padding: 8px;
+    background-color: #fff;
+    border-radius: .25rem;
+    cursor: pointer;
+    transition: .25s ease-in-out background-color;
 
-    &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 1px;
-        background-color: #c9cfdd;
-    }
-
-    &:last-child {
-        &::after {
-            display: none;
-        }
+    &:hover {
+        background-color: #eee;
     }
 
     &__title {
@@ -43,10 +35,5 @@
             border-bottom: 1px solid rgba(127, 146, 176, .75);
             transition: .1s ease border-color;
         }
-    }
-
-    .delete-btn {
-        flex: 0 1 auto;
-        margin-left: .75rem;
     }
 }
